@@ -1,4 +1,4 @@
-package pl.algorythm;
+package pl.algorythm.impl;
 
 import pl.algorythm.model.Graph;
 import pl.algorythm.model.Node;

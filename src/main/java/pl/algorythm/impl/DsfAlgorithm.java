@@ -1,5 +1,6 @@
-package pl.algorythm;
+package pl.algorythm.impl;
 
+import pl.algorythm.Algorithm;
 import pl.algorythm.model.Graph;
 import pl.algorythm.model.MazeSolve;
 import pl.algorythm.model.Node;

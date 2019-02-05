@@ -1,7 +1,8 @@
-package pl.algorythm;
+package pl.algorythm.impl;
 
 import com.google.common.base.Preconditions;
 import lombok.AllArgsConstructor;
+import pl.algorythm.Algorithm;
 import pl.algorythm.model.Graph;
 import pl.algorythm.model.MazeSolve;
 import pl.algorythm.model.Node;
