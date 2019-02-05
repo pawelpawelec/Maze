@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"parent", "back"})
 public class Node {
   private Node parent;
   private int x;

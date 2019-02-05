@@ -24,11 +24,7 @@ class BsfAlgorithm implements Algorithm {
     queue.add(startPoint);
     while (!queue.isEmpty()) {
       Node poll = queue.poll();
-      if ((graph.existInGraph(poll)
-              || poll.getX() < graph.length()
-              && poll.getY() < graph.width()
-              && graph.isWall(poll.getX(), poll.getY()))) {
-      } else if (poll.equals(endPoint)) {
+      if (poll.equals(endPoint)) {
         int path = 1;
         List<Node> pathNodes = new ArrayList<>();
         Node x = poll;
@@ -49,10 +45,9 @@ class BsfAlgorithm implements Algorithm {
         queue.addAll(children);
       }
     }
-    try {
-      return paths.stream().min(Comparator.comparing(MazeSolve::getSizePath)).orElseGet(() -> MazeSolve.builder().build());
-    } catch (NoSuchElementException e) {
-      throw new IllegalStateException("Labirynt nie ma wyjścia");
-    }
+    return paths
+            .stream()
+            .min(Comparator.comparing(MazeSolve::getSizePath))
+            .orElseGet(() -> MazeSolve.builder().build());
   }
 }

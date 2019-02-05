@@ -3,7 +3,10 @@ package pl.algorythm.model;
 import com.google.common.collect.ImmutableList;
 import lombok.Builder;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.Objects.nonNull;
 
 @Builder
 public class MazeSolve {
@@ -16,6 +19,7 @@ public class MazeSolve {
   }
 
   public List<Node> getPath() {
-    return ImmutableList.copyOf(path);
+    return nonNull(path) ? ImmutableList.copyOf(path)
+            : new ArrayList<>();
   }
 }

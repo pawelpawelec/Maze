@@ -9,13 +9,12 @@ import pl.algorythm.model.Graph;
 import pl.algorythm.model.MazeSolve;
 import pl.algorythm.model.Node;
 
-import java.util.List;
-
-public class AlgorithmAStarTest {
+public class AlgorithmAStarTest extends AlgorithBaseTest {
 
   @Test
   public void solve1() {
 
+    // given
     int[][] maze = {
             {0, 1, 0, 1, 0, 0},
             {0, 1, 0, 0, 0, 0},
@@ -25,16 +24,26 @@ public class AlgorithmAStarTest {
             {0, 0, 1, 1, 1, 1}
     };
     Algorithm algorithmA = AlgorithmFactory.create(Algorithms.A_STAR);
+
+    // when
     MazeSolve solve = algorithmA.solve(new Graph(maze), new Node(0, 1), new Node(5, 5));
-    long path = solve.getSizePath();
-    System.out.println(solve.getPath());
-    print(maze, solve.getPath());
-    Assert.assertEquals(10, path);
+
+    // then
+    Assert.assertEquals(10, solve.getSizePath());
+    Assert.assertArrayEquals(new int[][]{
+            {0, 8, 0, 1, 0, 0},
+            {0, 8, 0, 0, 0, 0},
+            {0, 8, 8, 1, 1, 1},
+            {0, 0, 8, 0, 0, 0},
+            {1, 0, 8, 8, 0, 0},
+            {0, 0, 1, 8, 8, 8}
+    }, solveMaze(maze, solve.getPath()));
   }
 
   @Test
   public void solve2() {
 
+    // given
     int[][] maze = {
             {0, 1, 0, 1, 0, 0},
             {0, 1, 0, 0, 0, 0},
@@ -44,19 +53,27 @@ public class AlgorithmAStarTest {
             {0, 0, 1, 1, 1, 1}
     };
     Algorithm algorithmA = AlgorithmFactory.create(Algorithms.A_STAR);
+
+    // when
+
     MazeSolve solve = algorithmA.solve(new Graph(maze), new Node(0, 1), new Node(5, 5));
-    long path = solve.getSizePath();
-    print(maze, solve.getPath());
-    Assert.assertEquals(10, path);
-    MazeSolve solve1 = algorithmA.solve(new Graph(maze), new Node(2, 5), new Node(5, 5));
-    path = solve1.getSizePath();
-    print(maze, solve1.getPath());
-    Assert.assertEquals(8, path);
+
+    // then
+    Assert.assertEquals(10, solve.getSizePath());
+    Assert.assertArrayEquals(new int[][]{
+            {0, 8, 0, 1, 0, 0},
+            {0, 8, 0, 0, 0, 0},
+            {0, 8, 8, 8, 1, 1},
+            {0, 0, 0, 8, 0, 0},
+            {1, 0, 1, 8, 0, 0},
+            {0, 0, 1, 8, 8, 8}
+    }, solveMaze(maze, solve.getPath()));
   }
 
   @Test(expected = IllegalStateException.class)
   public void solve3() {
 
+    // given
     int[][] maze = {
             {0, 1, 1, 1, 1, 1},
             {0, 1, 0, 0, 0, 0},
@@ -67,32 +84,50 @@ public class AlgorithmAStarTest {
     };
 
     Algorithm algorithmA = AlgorithmFactory.create(Algorithms.A_STAR);
+
+    // when
     MazeSolve solve = algorithmA.solve(new Graph(maze), new Node(0, 1), new Node(5, 5));
-    long path = solve.getSizePath();
-    print(maze, solve.getPath());
-    Assert.assertEquals(0, path);
+
+    // then
+    Assert.assertEquals(0, solve.getSizePath());
+    Assert.assertArrayEquals(new int[][]{
+            {0, 1, 1, 1, 1, 1},
+            {0, 1, 0, 0, 0, 0},
+            {0, 1, 0, 1, 1, 1},
+            {0, 0, 0, 0, 0, 1},
+            {1, 0, 1, 1, 0, 1},
+            {0, 0, 1, 1, 1, 1}
+    }, solveMaze(maze, solve.getPath()));
   }
 
-  private void print(int[][] maze, List<Node> nodes) {
-    int[][] mazeSolve = copyArray(maze);
-    for (Node node : nodes) {
-      mazeSolve[node.getX()][node.getY()] = 8;
-    }
-    for (int i = 0; i < maze.length; i++) {
-      for (int j = 0; j < maze[i].length; j++) {
-        System.out.print(mazeSolve[i][j] + " ");
-      }
-      System.out.println();
-    }
+  @Test
+  public void solve4() {
+
+    // given
+    int[][] maze = {
+            {0, 1, 0, 1, 0, 0},
+            {0, 1, 0, 0, 0, 0},
+            {0, 1, 1, 1, 1, 1},
+            {0, 0, 0, 1, 0, 0},
+            {1, 0, 1, 1, 0, 0},
+            {0, 0, 1, 1, 1, 1}
+    };
+    Algorithm algorithmA = AlgorithmFactory.create(Algorithms.A_STAR);
+
+    // when:
+    MazeSolve solve = algorithmA.solve(new Graph(maze), new Node(2, 5), new Node(5, 5));
+
+    // then
+    Assert.assertEquals(8, solve.getSizePath());
+    Assert.assertArrayEquals(new int[][]{
+            {0, 1, 0, 1, 0, 0},
+            {0, 1, 0, 0, 0, 0},
+            {0, 1, 1, 8, 8, 8},
+            {0, 0, 0, 8, 0, 0},
+            {1, 0, 1, 8, 0, 0},
+            {0, 0, 1, 8, 8, 8}
+    }, solveMaze(maze, solve.getPath()));
   }
 
-  private int[][] copyArray(int[][] maze) {
-    int[][] mazeCopy = new int[maze.length][maze[0].length];
-    for (int i = 0; i < maze.length; i++) {
-      for (int j = 0; j < maze[i].length; j++) {
-        mazeCopy[i][j] = maze[i][j];
-      }
-    }
-    return mazeCopy;
-  }
+
 }
