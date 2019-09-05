@@ -30,7 +30,8 @@ class BsfAlgorithm implements Algorithm {
         Node x = poll;
         pathNodes.add(x);
         while (nonNull(x.getParent())) {
-          pathNodes.add(x.getParent());
+          x = x.getParent();
+          pathNodes.add(x);
         }
         paths.add(MazeSolve.builder()
                 .path(pathNodes)
