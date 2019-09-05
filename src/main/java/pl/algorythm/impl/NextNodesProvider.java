@@ -1,4 +1,4 @@
-package pl.algorythm;
+package pl.algorythm.impl;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
